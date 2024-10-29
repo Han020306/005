@@ -24,3 +24,39 @@ You can add options to executable code like this
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+# Load the 'sf' library, which stands for Simple Features, used for working with spatial data.
+library(sf)
+# Load the 'tidyverse' library, a collection of packages for data manipulation and visualization.
+library(tidyverse)
+# Load the 'tmap' library, which is used for creating thematic maps and visualizing spatial data.
+library(tmap)
+# The 'readr' library provides a fast and user-friendly way to read data from common formats like CSV.
+library(readr)
+# Converts Between GeoJSON and simple feature objects
+library(geojsonsf) 
+# RColorBrewer library for creating visually appealing color schemes for plots and data visualizations
+library(RColorBrewer)
+# Corking with class intervals and classification methods, esp in the context of spatial data analysis.
+library(classInt)
+library(readxl)
+library(fs)
+```
+
+```{r}
+GII <- read_excel("data/hdr-data.xlsx")
+world_boundary <-st_read("data/World_Countries_Generalized.shp")
+```
+
+```{r}
+GII_world <- left_join(world_boundary, 
+                       GII, 
+                       by=c("COUNTRY"="country"))
+```
+
+```{r}
+GII_world_filtered <- GII_world %>%
+  filter(indicator == "Gender Inequality Index (value)")
+
+```
